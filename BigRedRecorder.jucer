@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="SEj9VT" name="BigRedRecorder" projectType="audioplug" jucerVersion="5.4.7"
               companyName="mwicat" companyWebsite="git.mwicat.com" pluginManufacturer="mwicat"
-              pluginFormats="buildAU,buildStandalone,buildVST3">
+              pluginFormats="buildAU,buildStandalone,buildVST3" version="0.1.0">
   <MAINGROUP id="cAWunT" name="BigRedRecorder">
     <GROUP id="{C60B9E0D-EC73-E46B-23C0-7565FEC78B53}" name="Assets">
       <FILE id="rC66NZ" name="LICENSE" compile="0" resource="0" file="LICENSE"/>
