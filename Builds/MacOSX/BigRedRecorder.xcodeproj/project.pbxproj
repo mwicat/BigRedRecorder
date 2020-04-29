@@ -407,6 +407,13 @@
 			path = System/Library/Frameworks/AudioUnit.framework;
 			sourceTree = SDKROOT;
 		};
+		8269979BC60A53CBCEFA269E = {
+			isa = PBXFileReference;
+			lastKnownFileType = file.md;
+			name = README.md;
+			path = ../../README.md;
+			sourceTree = "SOURCE_ROOT";
+		};
 		84DE05C8DA59BF6909161CE1 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -448,6 +455,13 @@
 			name = "juce_audio_basics";
 			path = "~/JUCE/modules/juce_audio_basics";
 			sourceTree = "<absolute>";
+		};
+		9EC9E852360A62B29A4327FA = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = LICENSE;
+			path = ../../LICENSE;
+			sourceTree = "SOURCE_ROOT";
 		};
 		A1FEE8DAD628196F376161F5 = {
 			isa = PBXFileReference;
@@ -631,6 +645,15 @@
 			path = "~/JUCE/modules/juce_events";
 			sourceTree = "<absolute>";
 		};
+		26A105B5D7961F2A4C41ED24 = {
+			isa = PBXGroup;
+			children = (
+				9EC9E852360A62B29A4327FA,
+				8269979BC60A53CBCEFA269E,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
 		0901E9DB477E8917A8D63D40 = {
 			isa = PBXGroup;
 			children = (
@@ -655,6 +678,7 @@
 		B6250E45F74ECC383EC9D45A = {
 			isa = PBXGroup;
 			children = (
+				26A105B5D7961F2A4C41ED24,
 				0901E9DB477E8917A8D63D40,
 				AD87FFC3BB8AF1E8337EC893,
 			);

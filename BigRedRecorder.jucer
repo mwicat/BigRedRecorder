@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="SEj9VT" name="BigRedRecorder" projectType="audioplug" jucerVersion="5.4.7"
-              pluginCharacteristicsValue="pluginWantsMidiIn" companyName="mwicat"
-              companyWebsite="git.mwicat.com" pluginManufacturer="mwicat">
+              companyName="mwicat" companyWebsite="git.mwicat.com" pluginManufacturer="mwicat"
+              pluginFormats="buildAU,buildStandalone,buildVST3">
   <MAINGROUP id="cAWunT" name="BigRedRecorder">
+    <GROUP id="{C60B9E0D-EC73-E46B-23C0-7565FEC78B53}" name="Assets">
+      <FILE id="rC66NZ" name="LICENSE" compile="0" resource="0" file="LICENSE"/>
+      <FILE id="DWE0vl" name="README.md" compile="0" resource="0" file="README.md"/>
+    </GROUP>
     <GROUP id="{BAA9DE9A-748C-FDCA-15E9-D8303EC20D23}" name="Resources">
       <FILE id="fv4Ssp" name="drag-drop-line.svg" compile="0" resource="1"
             file="Resources/drag-drop-line.svg"/>
