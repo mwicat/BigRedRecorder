@@ -46,7 +46,7 @@ void RecorderAudioProcessor::startRecording (const File& file)
             // Now create a WAV writer object that writes to our output stream...
             WavAudioFormat wavFormat;
 
-            if (auto writer = wavFormat.createWriterFor (fileStream.get(), sampleRate, 1, 16, {}, 0))
+            if (auto writer = wavFormat.createWriterFor (fileStream.get(), sampleRate, getTotalNumInputChannels(), 24, {}, 0))
             {
                 fileStream.release(); // (passes responsibility for deleting the stream to the writer object that is now using it)
 
