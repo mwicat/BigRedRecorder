@@ -435,6 +435,13 @@
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_AU_2.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		925FA31D14042B385A99580A = {
+			isa = PBXFileReference;
+			lastKnownFileType = file.json;
+			name = spec.json;
+			path = ../../installer/mac/spec.json;
+			sourceTree = "SOURCE_ROOT";
+		};
 		94A563ACCB55707F826F605A = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -650,6 +657,7 @@
 			children = (
 				9EC9E852360A62B29A4327FA,
 				8269979BC60A53CBCEFA269E,
+				925FA31D14042B385A99580A,
 			);
 			name = Assets;
 			sourceTree = "<group>";

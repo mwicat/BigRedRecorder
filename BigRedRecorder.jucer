@@ -7,6 +7,7 @@
     <GROUP id="{C60B9E0D-EC73-E46B-23C0-7565FEC78B53}" name="Assets">
       <FILE id="rC66NZ" name="LICENSE" compile="0" resource="0" file="LICENSE"/>
       <FILE id="DWE0vl" name="README.md" compile="0" resource="0" file="README.md"/>
+      <FILE id="NEsDIN" name="spec.json" compile="0" resource="0" file="installer/mac/spec.json"/>
     </GROUP>
     <GROUP id="{BAA9DE9A-748C-FDCA-15E9-D8303EC20D23}" name="Resources">
       <FILE id="fv4Ssp" name="drag-drop-line.svg" compile="0" resource="1"
