@@ -1,5 +1,7 @@
 # BigRedRecorder
 
+![BigRedRecorder](https://raw.githubusercontent.com/mwicat/BigRedRecorder/master/docs/img/bigredrecorder.png)
+
 ## Usage
 
 - Place BigRedRecorder audio effect on the track where you want to capture audio from
