@@ -204,13 +204,6 @@
 			path = System/Library/Frameworks/AudioToolbox.framework;
 			sourceTree = SDKROOT;
 		};
-		1D167812C8A0F483F906ECB3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file.svg;
-			name = "drag-drop-line.svg";
-			path = "../../Resources/drag-drop-line.svg";
-			sourceTree = "SOURCE_ROOT";
-		};
 		1D2FFA2D2EEC12A3FA17CA74 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -435,6 +428,13 @@
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_AU_2.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		8D2F851436361207889CF601 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file.svg;
+			name = "record-circle-line.svg";
+			path = "../../Resources/record-circle-line.svg";
+			sourceTree = "SOURCE_ROOT";
+		};
 		925FA31D14042B385A99580A = {
 			isa = PBXFileReference;
 			lastKnownFileType = file.json;
@@ -589,6 +589,13 @@
 			path = "~/JUCE/modules/juce_cryptography";
 			sourceTree = "<absolute>";
 		};
+		E85281454E7DFE3C02DF7E70 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file.svg;
+			name = "file-music-line.svg";
+			path = "../../Resources/file-music-line.svg";
+			sourceTree = "SOURCE_ROOT";
+		};
 		ECDCA1EAA1DCCF80EE0FD71A = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -665,7 +672,8 @@
 		0901E9DB477E8917A8D63D40 = {
 			isa = PBXGroup;
 			children = (
-				1D167812C8A0F483F906ECB3,
+				E85281454E7DFE3C02DF7E70,
+				8D2F851436361207889CF601,
 			);
 			name = Resources;
 			sourceTree = "<group>";

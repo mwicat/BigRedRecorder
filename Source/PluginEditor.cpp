@@ -15,10 +15,13 @@
 RecorderAudioProcessorEditor::RecorderAudioProcessorEditor (RecorderAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p), recordingComponent (p)
 {
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
-    setSize (600, 300);
     addAndMakeVisible(recordingComponent);
+    double ratio = 2.0;
+    int w = processor.lastUIWidth;
+    int h = processor.lastUIHeight;
+    setResizeLimits(150, 150/ratio, 1200, 1200/ratio);
+    getConstrainer()->setFixedAspectRatio(ratio);
+    setSize(w, h);
 }
 
 RecorderAudioProcessorEditor::~RecorderAudioProcessorEditor()
@@ -29,12 +32,12 @@ RecorderAudioProcessorEditor::~RecorderAudioProcessorEditor()
 void RecorderAudioProcessorEditor::paint (Graphics& g)
 {
     g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
-
-    g.setColour (Colours::white);
-    g.setFont (30.05f);
 }
 
 void RecorderAudioProcessorEditor::resized()
 {
+    auto bounds = getLocalBounds();
+    processor.lastUIWidth = bounds.getWidth();
+    processor.lastUIHeight = bounds.getHeight();
     recordingComponent.setBounds(getLocalBounds());
 }

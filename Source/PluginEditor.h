@@ -33,5 +33,6 @@ private:
     // access the processor object that created it.
     RecorderAudioProcessor& processor;
     AudioRecordingComponent recordingComponent;
+    TooltipWindow tooltipWindow { this, 500 };
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RecorderAudioProcessorEditor)
 };

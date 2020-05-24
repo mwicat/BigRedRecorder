@@ -21,10 +21,15 @@ RecorderAudioProcessor::RecorderAudioProcessor()
                       #endif
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
+#else
+    :
 #endif
+    parameters (*this, nullptr, Identifier ("BigRedRecorder"), {})
 {
     backgroundThread.startThread();
+    lastUIWidth = 250;
+    lastUIHeight = 125;
 }
 
 RecorderAudioProcessor::~RecorderAudioProcessor()
@@ -227,7 +232,7 @@ void RecorderAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffe
 //==============================================================================
 bool RecorderAudioProcessor::hasEditor() const
 {
-    return true; // (change this to false if you choose to not supply an editor)
+    return true;
 }
 
 AudioProcessorEditor* RecorderAudioProcessor::createEditor()
@@ -238,16 +243,25 @@ AudioProcessorEditor* RecorderAudioProcessor::createEditor()
 //==============================================================================
 void RecorderAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    std::unique_ptr<XmlElement> xml (parameters.state.createXml());
+
+    xml->setAttribute ("uiWidth", lastUIWidth);
+    xml->setAttribute ("uiHeight", lastUIHeight);
+    copyXmlToBinary (*xml, destData);
 }
 
 void RecorderAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+   std::unique_ptr<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+
+   if (xmlState.get() != nullptr)
+       if (xmlState->hasTagName (parameters.state.getType()))
+       {
+           lastUIWidth  = xmlState->getIntAttribute ("uiWidth", lastUIWidth);
+           lastUIHeight = xmlState->getIntAttribute ("uiHeight", lastUIHeight);
+       }
 }
+
 
 //==============================================================================
 // This creates new instances of the plugin..

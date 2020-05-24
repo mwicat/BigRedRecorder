@@ -1,0 +1,17 @@
+{
+  "title": "BigRedRecorder Install",
+  "background": "background.png",
+  "icon-size": 80,
+  "window": {
+      "size": {
+          "width": 660,
+          "height": 400
+      }
+  },
+  "contents": [
+    { "x": 150, "y": 0, "type": "file", "path": "../../Builds/MacOSX/build/Release/BigRedRecorder.vst3" },
+    { "x": 150, "y": 250, "type": "file", "path": "../../Builds/MacOSX/build/Release/BigRedRecorder.component" },
+    { "x": 510, "y": 0, "type": "link", "path": "/Library/Audio/Plug-Ins/VST3" },
+    { "x": 510, "y": 250, "type": "link", "path": "/Library/Audio/Plug-Ins/Components" }
+  ]
+}

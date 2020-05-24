@@ -10,8 +10,10 @@
       <FILE id="NEsDIN" name="spec.json" compile="0" resource="0" file="installer/mac/spec.json"/>
     </GROUP>
     <GROUP id="{BAA9DE9A-748C-FDCA-15E9-D8303EC20D23}" name="Resources">
-      <FILE id="fv4Ssp" name="drag-drop-line.svg" compile="0" resource="1"
-            file="Resources/drag-drop-line.svg"/>
+      <FILE id="Gox1WN" name="file-music-line.svg" compile="0" resource="1"
+            file="Resources/file-music-line.svg"/>
+      <FILE id="ou9cPM" name="record-circle-line.svg" compile="0" resource="1"
+            file="Resources/record-circle-line.svg"/>
     </GROUP>
     <GROUP id="{DC60D91B-1CD6-11DC-07B0-8D4155BF9900}" name="Source">
       <FILE id="fYcQS5" name="PluginUtils.h" compile="0" resource="0" file="Source/PluginUtils.h"/>

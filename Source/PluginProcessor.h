@@ -54,6 +54,9 @@ public:
     void startRecording (const File& file);
     void stop();
     bool isRecording();
+    
+    int lastUIWidth;
+    int lastUIHeight;
 
     //==============================================================================
     void getStateInformation (MemoryBlock& destData) override;
@@ -66,7 +69,7 @@ private:
 
     CriticalSection writerLock;
     std::atomic<AudioFormatWriter::ThreadedWriter*> activeWriter { nullptr };
-
+    AudioProcessorValueTreeState parameters;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RecorderAudioProcessor)
 };

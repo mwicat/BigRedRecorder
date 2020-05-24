@@ -4,45 +4,58 @@
 #include "PluginUtils.h"
 
 
-class DragAndDropArea : public Component, public DragAndDropContainer
+class ThumbnailButton : public DrawableButton
 {
 public:
-    DragAndDropArea ()
+    ThumbnailButton (const String& name, const DrawableButton::ButtonStyle buttonStyle)
+    : DrawableButton (name, buttonStyle)
     {
-        setColour(Label::backgroundColourId, Colours::darkgrey);
-        icon = std::unique_ptr<Drawable>(Drawable::createFromImageData (BinaryData::dragdropline_svg, BinaryData::dragdropline_svgSize));
     }
     
-    void paint (Graphics& g) override
+    void setImagesFromThumbnail(Drawable* image, Colour colour)
     {
-        g.fillAll (inside ? Colours::white : Colours::lightgrey);
+        auto normalImage = image->createCopy();
+        normalImage->replaceColour(Colours::black, colour);
         
-        g.setColour (Colours::black);
-        g.setFont (14.0f);
-        auto area = getLocalBounds();
-        auto x = (area.getWidth() - iconSize) / 2;
-        auto y = (area.getHeight() - iconSize) / 2;
-        icon->drawWithin(g, Rectangle<float>(x, y, iconSize, iconSize), RectanglePlacement::Flags::centred, 1.0f);
-        //g.drawImageAt (dnd_icon.get(), );
-        g.drawFittedText (
-                          "Drag from this area and drop recorded"
-                          " audio into application of your choice",
-                          area.withTrimmedBottom(10),
-                          Justification::centredBottom,
-                          10);
+        auto overImage = image->createCopy();
+        overImage->replaceColour(Colours::black, colour.brighter());
+        
+        auto downImage = image->createCopy();
+        downImage->replaceColour(Colours::black, colour.darker());
+
+        auto disabledImage = image->createCopy();
+        disabledImage->replaceColour(Colours::black, Colours::darkgrey);
+
+        auto onImage = image->createCopy();
+        onImage->replaceColour(Colours::black, colour.darker());
+        
+        setImages(normalImage.get(),
+                  overImage.get(),
+                  downImage.get(),
+                  disabledImage.get(),
+                  onImage.get());
+    }
+};
+
+
+class DragAndDropArea : public ThumbnailButton, public DragAndDropContainer
+{
+public:
+    DragAndDropArea (): ThumbnailButton("DragArea", DrawableButton::ButtonStyle::ImageAboveTextLabel)
+    {
+        setColour(DrawableButton::backgroundOnColourId, findColour(DrawableButton::backgroundColourId));
+        std::unique_ptr<Drawable> image = Drawable::createFromImageData (
+                                                              BinaryData::filemusicline_svg,
+                                                              BinaryData::filemusicline_svgSize);
+        setImagesFromThumbnail(image.get(), Colours::lightgreen);
+        setButtonText("Drag me!");
+        setEnabled(false);
     }
     
-    void mouseEnter (const MouseEvent& event) override
+    void setEnabled (bool shouldBeEnabled)
     {
-        inside = true;
-        setMouseCursor(MouseCursor::DraggingHandCursor);
-        repaint();
-    }
-
-    void mouseExit (const MouseEvent& event) override
-    {
-        inside = false;
-        repaint();
+        setMouseCursor(shouldBeEnabled ? MouseCursor::DraggingHandCursor : MouseCursor::NormalCursor);
+        ThumbnailButton::setEnabled(shouldBeEnabled);
     }
 
     void mouseDown (const MouseEvent &event) override
@@ -64,65 +77,55 @@ public:
     
 private:
     File file;
-    std::unique_ptr<Drawable> icon;
-    int iconSize = 64;
-    bool inside = false;
 };
 
-class RecordButton : public TextButton, public Timer
+
+class RecordButton : public ThumbnailButton, public Timer
 {
 public:
-    RecordButton (): TextButton()
+    RecordButton (): ThumbnailButton("Record", DrawableButton::ButtonStyle::ImageAboveTextLabel)
     {
+        setColour(DrawableButton::backgroundOnColourId, findColour(DrawableButton::backgroundColourId));
+        std::unique_ptr<Drawable> image = Drawable::createFromImageData (
+                                                              BinaryData::recordcircleline_svg,
+                                                              BinaryData::recordcircleline_svgSize);
+        setImagesFromThumbnail(image.get(), colour);
+        setClickingTogglesState(true);
         stopRecording();
     }
     
     void stopRecording()
     {
+        setButtonText("Record");
         stopTimer();
-        setButtonText ("Record");
-        setColour (TextButton::buttonColourId, Colour (0xffff5c5c));
-        setColour (TextButton::textColourOnId, Colours::black);
     }
     
     void startRecording()
     {
-        setButtonText ("Stop");
+        setButtonText("Stop");
         startTimer(500);
     }
 
     void timerCallback() override
     {
-        setColour(TextButton::buttonColourId, Colour (on ? 0xffff5c5c : 0xffca837c));
         on = !on;
+        setColour(DrawableButton::textColourOnId, on ? colour : Colours::white);
     }
     
 private:
     bool on = false;
+    Colour colour = Colour (0xffff5c5c);
 };
 
-//==============================================================================
+
 class AudioRecordingComponent  : public Component
 {
 public:
     AudioRecordingComponent (RecorderAudioProcessor& p)
     : processor(p)
     {
-        setOpaque (true);
-
-        addAndMakeVisible(headerLabel);
-        headerLabel.setJustificationType(Justification::centred);
-        headerLabel.setFont(24.0f);
-        headerLabel.setColour(Label::textColourId, Colour (0xffff5c5c));
-
-        footerLabel.setJustificationType(Justification::bottomRight);
-        footerLabel.setColour(Label::textColourId, Colour (0xffdab872));
-        footerLabel.setFont (12.0f);
-        
         addAndMakeVisible (recordButton);
         addAndMakeVisible(dndArea);
-        addAndMakeVisible(footerLabel);
-        addAndMakeVisible(hintLabel);
         
         recordButton.onClick = [this]
         {
@@ -131,11 +134,7 @@ public:
             else
                 startRecording();
         };
-        
         targetDir = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BigRedRecorder");
-        
-        hintLabel.setFont(14.0f);
-        hintLabel.setText("Target directory: " + targetDir.getFullPathName(), NotificationType::dontSendNotification);
         handleResult(targetDir.createDirectory(), "creating " + targetDir.getFullPathName());
     }
 
@@ -152,18 +151,12 @@ public:
     {
         auto area = getLocalBounds();
         auto halfW = area.getWidth() / 2;
-        headerLabel.setBounds(area.removeFromTop(40).reduced(5));
-        footerLabel.setBounds(area.removeFromBottom(footerLabel.getFont().getHeight()+10).reduced(5));
-        hintLabel.setBounds(area.removeFromBottom(hintLabel.getFont().getHeight()));
         recordButton.setBounds(area.withTrimmedRight(halfW).reduced(5));
         dndArea.setBounds(area.withTrimmedLeft(halfW).reduced(5));
     }
 
 private:
     RecorderAudioProcessor& processor;
-    Label headerLabel { {}, "Big Red Recorder" };
-    Label footerLabel { {}, "mwicat"};
-    Label hintLabel { {}, ""};
     RecordButton recordButton;
     File lastRecording;
     DragAndDropArea dndArea;
@@ -171,21 +164,18 @@ private:
 
     void startRecording()
     {
-        if (lastRecording.existsAsFile())
-        {
-            lastRecording.deleteFile();
-        }
         lastRecording = targetDir.getNonexistentChildFile ("BigRedRecorder_audio", ".wav");
-        dndArea.setFile(lastRecording);
         processor.startRecording (lastRecording);
         recordButton.startRecording();
+        dndArea.setEnabled(false);
     }
 
     void stopRecording()
     {
         processor.stop();
-        lastRecording = File();
         recordButton.stopRecording();
+        dndArea.setFile(lastRecording);
+        dndArea.setEnabled(true);
     }
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioRecordingComponent)
