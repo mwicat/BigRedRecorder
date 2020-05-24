@@ -11,22 +11,3 @@
 
 Remember to collect all files when finishing session in DAW! Files recorded in BigRedRecorder end up in designated directory, so they need to be copied
 into project directory if you want them to be handled together with all other project files. More info at https://help.ableton.com/hc/en-us/articles/209775645-Using-Collect-All-and-Save-
-
-        auto normalImage = image->createCopy();
-        normalImage->replaceColour(Colours::black, bgColor);
-        
-        auto overImage = image->createCopy();
-        overImage->replaceColour(Colours::black, bgColor.brighter());
-        
-        auto downImage = image->createCopy();
-        downImage->replaceColour(Colours::black, bgColor.darker());
-
-        auto onImage = image->createCopy();
-        onImage->replaceColour(Colours::black, bgColor.darker());
-        
-        setImages(normalImage.get(),
-                  overImage.get(),
-                  downImage.get(),
-                  nullptr,
-                  onImage.get());
-        setClickingTogglesState(true);
